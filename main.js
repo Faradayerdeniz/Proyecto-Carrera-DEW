@@ -154,6 +154,7 @@ function crearNodo(tipoNodo, textoNodo, clasesNodo, atributos) {
   return nodo;
 }
 
+//cambiando la wea
 
 
 
