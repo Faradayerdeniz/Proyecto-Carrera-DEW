@@ -1,0 +1,14 @@
+.participante{
+    padding:30px;
+    border:solid 1px black;
+    width: 1000px;
+    height: 80px;
+}
+
+img{
+    width: 150px;
+    height: 100px;
+}
+button{
+    margin-top: 20px;
+}

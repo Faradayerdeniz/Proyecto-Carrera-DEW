@@ -1,7 +1,7 @@
 //objeto tranvía con las probabilidades y los movimientos por probabilidad
 const tranvia = {
   nombre: "chuchu",
-  img: "tranvia",
+  img: "tranvia.jpg",
   ventaja: {
     probabilidad: 25,
     movimiento: 5
@@ -58,11 +58,11 @@ const cohete = {
     movimiento: 15
   },
   normal: {
-    probabilidad: 40,
+    probabilidad: 30,
     movimiento: 10
   },
   dificultad: {
-    probabilidad: 30,
+    probabilidad: 20,
     movimiento: 5
   }
 };
@@ -70,52 +70,71 @@ const cohete = {
 //Zona donde voy a meter todo. 
 const trayecto = document.getElementsByClassName("trayecto")[0];
 
+
 //crear una array para movimientos. 
 let vehiculos = [];
 vehiculos.push(tranvia, autobus, coche, cohete);
+
+vehiculos.forEach(vehiculo => {
+  let containerParticipante = crearNodo("div","",["participante"],[]);
+
+  let imagenParticipante = crearNodo("img","",[],[{name:"id",value:vehiculo.nombre}, {name:"src",value:`./img/${vehiculo.img}`}]);
+
+  containerParticipante.appendChild(imagenParticipante);
+
+  trayecto.appendChild(containerParticipante);
+
+});
+
+
+//tengo que para cada imagen(participante), hacer que haga un paso cuando haga click en el botón y aplicarle un margin-left: + el movimiento de cada vehiculo x4 + "px"; 
+
+const totalParticipantes = vehiculos.length;
+
+//objeto al que le voy a meter, array de objetos.
+/* let movimientos = {
+  nombre:[{movimiento: "ventaja", value: 10},{}]
+}; */
+
+let movimientos = {};
+
+function funcionalidadesParticipantes() {
+  
+  vehiculos.forEach(vehiculo => {
+    movimientos[vehiculo.nombre] = [];
+  });
+
+  return movimientos;
+}
+
+console.log(funcionalidadesParticipantes());
+
+
 
 // la tirada de "dado" que hace cada uno. 
 function tirardado(maximo) {
   let num = 0;
   num = Math.floor(Math.random() * maximo) + 1;
   return num;
+};
+
+function totalMovimientos(movimientoParticipante) {
+  let suma = 0;
+  suma = movimientoParticipante.reduce(function (acumulador, avance) {
+    return (acumulador + avance) < 0 ? 0 : acumulador + avance;
+  }, 0);
+  return suma;
 }
 
-const numParticipantes = document.getElementById("numParticipantes");
+let botonPaso = document.getElementById("botonPaso");
 
-let numeroVehiculos = numParticipantes.value;
+botonPaso.addEventListener("click", movimientoPasoPaso);
 
-//Recorre arrays  RECORRER EL ARRAY DE VEHÍCULOS, SACAR UNO DE LOS NOMBRES, SI EL NOMBRE SE REPITE, SACAR OTRO, HASTA QUE EL NÚMERO COINCIDA CON EL NÚMERO DE PARTICIPANTES INTRODUCIDOS.
-//PD: no sé hacerlo. 
-function recorrerArray (arroces, jugadores){ 
-  let arrayFinal = [];
-
-  let terminado = false;
-  while(terminado != true){
-    
-  }
-
-}
-
-
-
-/*numParticipantes.nextElementSibling.addEventListener("click");*/
-
-
-
-
-
-//función de sumar los componentes del array "pasito".
-function sumaPasito(paso) {
-  let total = paso.reduce((a, b) => a + b, 0); //el 0 representa la posición 0 que es desde donde empiezan todos, a no ser que se pida por teclado algo diferente
-  return (total);
-}
-
-//Función de movimiento paso a paso 
 
 function movimientoPasoPaso(num, vehiculos, pasito) {
 
   if (num <= vehiculos.ventaja.probabilidad) { // && si llega a 250 para puto. 
+
     pasito.push(vehiculos.ventaja.movimiento);
 
   } else {
@@ -136,8 +155,8 @@ function movimientoPasoPaso(num, vehiculos, pasito) {
     }
   }
 }
-//Creación de nodo de forma FULLPRO JOSE#
-// prueba let pitoNodo = crearNodo("div","Hola, pa ti mi cola",["pitoClase"],[{name: "id",value:"pitoId"}]);
+
+
 function crearNodo(tipoNodo, textoNodo, clasesNodo, atributos) {
 
   let nodo = document.createElement(tipoNodo);
@@ -153,14 +172,3 @@ function crearNodo(tipoNodo, textoNodo, clasesNodo, atributos) {
   }
   return nodo;
 }
-
-//cambiando la wea
-
-
-
-
-/* // Función para rellenar "Paso a Paso"
-function pito() {
-  for (var i = 0; i < vehiculos.length; i++)
-    movimientoPasoPaso(tirardado(), vehiculos[i], movimientoArray[i]);
-} */
